@@ -14,16 +14,26 @@ const selectedAuthors = [];
 //  CSS styles
 //=========================================================================================================
 const cssUnset = `
-    margin: 5px;
+    display: block;
+    float: left;
     text-decoration: none;
     padding: 4px;
-    background: cyan`;
+    margin: 2px;
+    background: #ededed;
+    color: #808080;
+    border-bottom: 1px solid #777777;
+    cursor: pointer;`;
 
     const cssSet = `
-    margin: 5px;
+    display: block;
+    float: left;
     text-decoration: none;
     padding: 4px;
-    background: red`;
+    margin: 2px;
+    background: #204cf5;
+    color: #ffffff;
+    border-top: 1px solid #0025bd;
+    cursor: pointer;`;
 
 //=========================================================================================================
 //  Search action filter
@@ -136,6 +146,7 @@ function makeButton(text, elemId) {
     x.addEventListener('click', () => {
         applyFilter();
     });
+    x.setAttribute("style", "margin-left: 10px;");
     document.getElementById(elemId).appendChild(x);
     return;
 }
@@ -147,7 +158,7 @@ function makeSelectors() {
     for (let i = 0; i < authors.length; i++) {
         makeAuthorLink(i, authors, "authors")
     }
-    makeButton("Search", "tags");
+    makeButton("Search", "headerTitle");
 }
 
 makeSelectors();
