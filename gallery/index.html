@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+        a {
+            color: gray;
+        }
+        p {
+            padding: 0px;
+        }
+        #tags {
+            display: block;
+            padding: 3px;
+            height: auto;
+            background: #a4abb9;
+            overflow: hidden;
+        }
+        #authors {
+            display: block;
+            padding: 3px;
+            height: auto;
+            background: lightgrey;
+            overflow: hidden;
+        }
+        summary.pTitle {
+            margin: 0px;
+            font-weight: bold;
+            color: #4e546f;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2 id="headerTitle">JS-Gallery</h2>
+    <div>
+        <details id="tags" open>
+            <summary class="pTitle">Tags</summary>
+        </details>
+    </div>
+    <div>
+        <details id="authors">
+            <summary class="pTitle">Authors</summary>
+        </details>
+    </div>
+
+    <div id="content"></div>
+    <!-- scripts -->
+    <script type="text/javascript" src="tags.js"></script> 
+    <script type="text/javascript" src="data.js"></script> 
+    <script type="text/javascript" src="collector.js"></script> 
+</body>
+</html>
