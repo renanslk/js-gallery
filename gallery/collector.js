@@ -38,14 +38,14 @@ const cssUnset = `
 //=========================================================================================================
 //  Search action filter
 //=========================================================================================================
-function applyFilter() {
+function applyFilter(shuffle) {
     let result = data.reduce((res, element, i) => {
         if (selectedTags.every(v => element[image.TAGS].includes(v))) {
             if (selectedAuthors.length === 0) {
-                res.push(data[i][image.PATHNAME]);
+                res.push([data[i][image.PATHNAME], data[i][image.AUTHOR]]);
             } else {
                 if (selectedAuthors.some(v => element[image.AUTHOR].includes(v))) {
-                    res.push(data[i][image.PATHNAME]);
+                    res.push([data[i][image.PATHNAME], data[i][image.AUTHOR]]);
                 }
             }
         }
@@ -53,6 +53,11 @@ function applyFilter() {
     }, []);
 
     destroyAllImages();
+
+    if (shuffle === true) {
+        result.sort(() => Math.random() - 0.5);
+    }
+
     for (let i = 0; i < result.length; i++) {
         makeImage("img", i, result, "content");
     }
@@ -123,28 +128,37 @@ function makeAuthorLink(i, source, elemId) {
 }
 
 function makeImage(type, i, source, elemId) {
-    var x = document.createElement(type);
-    x.setAttribute("src", source[i]);
+    let x = document.createElement(type);
+    x.setAttribute("src", source[i][image.PATHNAME]);
     x.setAttribute("style", "max-height: 150px; margin: 2px;");
-    x.setAttribute("alt", source[i]);
+    x.setAttribute("alt", source[i][image.PATHNAME]);
     x.setAttribute("name", "galleryImg");
-    document.getElementById(elemId).appendChild(x);
+
+    let a = document.createElement('a');
+    a.setAttribute("href", source[i][image.PATHNAME]);
+    a.setAttribute("name", "galleryImgLink");
+    a.setAttribute("data-lightbox", "result");
+    a.setAttribute("data-title", source[i][image.PATHNAME] + " - (" + source[i][1] + ")");
+    a.appendChild(x);
+
+    document.getElementById(elemId).appendChild(a);
+
     return;
 }
 
 function destroyAllImages() {
-    var images = document.getElementsByName("galleryImg"); 
-    var l = images.length;
-    for (var i = 0; i < l; i++) { 
+    let images = document.getElementsByName("galleryImgLink"); 
+    let l = images.length;
+    for (let i = 0; i < l; i++) { 
         images[0].parentNode.removeChild(images[0]); }
     return;
 }
 
-function makeButton(text, elemId) {
-    var x = document.createElement("button");
+function makeButton(text, elemId, attribute) {
+    let x = document.createElement("button");
     x.textContent = text;
     x.addEventListener('click', () => {
-        applyFilter();
+        applyFilter(attribute);
     });
     x.setAttribute("style", "margin-left: 10px;");
     document.getElementById(elemId).appendChild(x);
@@ -158,7 +172,8 @@ function makeSelectors() {
     for (let i = 0; i < authors.length; i++) {
         makeAuthorLink(i, authors, "authors")
     }
-    makeButton("Search", "headerTitle");
+    makeButton("Search", "headerTitle", false);
+    makeButton("Shuffle", "headerTitle", true);
 }
 
 makeSelectors();
