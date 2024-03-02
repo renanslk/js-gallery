@@ -30,6 +30,5 @@ js-gallery
 - The usual search button will retrieve all filtered images in a predeterminated order, but you can use the shuffle search to receive images in a randomized way.
 
 ## :construction: Next steps:
-1. Expand images: Attach links to result images and implement expanding/zoom or open image;
 2. Sort authors/tags ascending: Sort tags for better search experience;
 3. Identify author: Show a small label to know to which author the image belongs.

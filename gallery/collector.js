@@ -42,10 +42,10 @@ function applyFilter(shuffle) {
     let result = data.reduce((res, element, i) => {
         if (selectedTags.every(v => element[image.TAGS].includes(v))) {
             if (selectedAuthors.length === 0) {
-                res.push(data[i][image.PATHNAME]);
+                res.push([data[i][image.PATHNAME], data[i][image.AUTHOR]]);
             } else {
                 if (selectedAuthors.some(v => element[image.AUTHOR].includes(v))) {
-                    res.push(data[i][image.PATHNAME]);
+                    res.push([data[i][image.PATHNAME], data[i][image.AUTHOR]]);
                 }
             }
         }
@@ -129,16 +129,16 @@ function makeAuthorLink(i, source, elemId) {
 
 function makeImage(type, i, source, elemId) {
     let x = document.createElement(type);
-    x.setAttribute("src", source[i]);
+    x.setAttribute("src", source[i][image.PATHNAME]);
     x.setAttribute("style", "max-height: 150px; margin: 2px;");
-    x.setAttribute("alt", source[i]);
+    x.setAttribute("alt", source[i][image.PATHNAME]);
     x.setAttribute("name", "galleryImg");
 
     let a = document.createElement('a');
-    a.setAttribute("href", source[i]);
+    a.setAttribute("href", source[i][image.PATHNAME]);
     a.setAttribute("name", "galleryImgLink");
     a.setAttribute("data-lightbox", "result");
-    a.setAttribute("data-title", source[i]);
+    a.setAttribute("data-title", source[i][image.PATHNAME] + " - (" + source[i][1] + ")");
     a.appendChild(x);
 
     document.getElementById(elemId).appendChild(a);
